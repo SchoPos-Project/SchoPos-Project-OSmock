@@ -12,6 +12,7 @@ Twitter:@SchoPos_Project
 These sentences were translated by a translation site.
 
 Japanese
+
 これはOSもどきを作るプロジェクトです。
 このプロジェクトは学生が企画しました。
 このプロジェクトはHSPでソフトを作っています。
