@@ -1,0 +1,21 @@
+;screen 30,30
+#include "user32.as"
+#define WS_EX_LAYERED $80000
+#define LWA_COLORKEY 1
+#define ULW_ALPHA 2
+;▼マウスドラッグによるウィンドウ移動
+	GetWindowLong hwnd, -20
+	SetWindowLong hwnd, -20, stat | WS_EX_LAYERED
+	GetWindowLong hwnd, -16
+	SetWindowLong hwnd, -16, stat -$80000
+	width 400, 200
+	SetLayeredWindowAttributes hwnd, 0, 70 * stat / 100, ULW_ALPHA
+		color 255,0,0
+		boxf
+		button "X",*exit
+		;onkey *exit
+
+	stop
+
+*exit
+	end

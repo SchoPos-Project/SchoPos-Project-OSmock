@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=Shift_JIS">
+	<meta name="content-language" content="ja">
+	<link rel="stylesheet" href="default.css" type="text/css">
+	<title>HSP Visual Designer - ツールバーの機能</title>
+</head>
+
+<body>
+<h1 class="title">ツールバーの機能</h1>
+<dl>
+	<dt><a name="new"><img src="new.gif">新規作成</dt>
+	<dd>フォームを新規作成します。<br>
+	フォームのサイズを指定してOKボタンを押せば、空のフォームが作成されます。<br>
+	「新規作成」ボタンを右クリックすると、サイズを指定しないで直接新規作成されます。</dd>
+
+	<dt><a name="open"><img src="open.gif">フォームを開く</dt>
+	<dd>フォームをファイルから読み込みます。
+	ファイル選択ダイアログで開きたいファイルを指定してください。<br>
+	「フォームを開く」ボタンを右クリックするとファイル履歴が表示され、開きたいファイルをクリックすれば読み込まれます。</dd>
+
+	<dt><a name="save"><img src="save.gif">フォームを保存</dt>
+	<dd>現在のフォームをファイルに保存します。</dd>
+
+	<dt><a name="saveas"><img src="saveas.gif">フォームに名前を付けて保存</dt>
+	<dd>現在のフォームに名前を付けて保存します。</dd>
+
+	<dt><a name="export"><img src="export.gif">HSPソースに変換</dt>
+	<dd>現在のフォームを、HSPのソースに変換して保存します。<br>
+	保存するファイル名を指定した後、変換オプションを指定します。<br>
+	既にソースを保存した場合、「HSPソースに変換」ボタンを右クリックすると、ファイル名を指定するダイアログが開かずに、前に保存したファイルに上書きされます。<br>
+	各オプションについては<a href="expopt.html">変換オプション</a>のページを参照してください。<br>
+	変換したソースは基本的にそのまま実行可能ですが、変換オプションで「ラベルを生成する」と「変数を初期化する」がチェックされていない場合、そのまま実行しようとするとエラーが出る場合があります。<br>
+	その他の理由でも実行できない、あるいはおかしくなることがあります。詳しくは<a href="faq.html#q1">こちら</a>を参照してください。<br>
+	なお、HSPのソースに変換する際、特定のオブジェクトが設置されていると、必要な変数やラベルが自動的に生成されることがあります。<br>
+	それらの変数やラベルは、変換オプションに関わらず常に生成されます。<br>
+	以下のオブジェクトでそのような処理が行われます。<br>
+	<div class="subdl">
+	<dl>
+		<dt>ボタン</dt>
+		<dd>スタイルを標準以外にした場合、objsend命令に必要な変数、_lParamが自動的に生成されます。</dd>
+		<dt>ラジオボタン</dt>
+		<dd>objsend命令に必要な変数、_lParamが自動的に生成されます。</dd>
+		<dt>グループボックス</dt>
+		<dd>objsend命令に必要な変数、_lParamが自動的に生成されます。<br>
+		ダミーのラベルとして、*_dummyが生成されます。
+		実際にはこのラベルにジャンプすることはありません。</dd>
+		<dt>画像</dt>
+		<dd>読み込んだ画像のサイズを保持するための変数、_imgxと_imgyが生成されます。</dd>
+	</dl>
+	</div>
+	なお、自動的に生成されるキーワード名は hspvd.ini ファイルを編集して変更することができます。
+	</dd>
+
+	<dt><a name="preview"><img src="preview.gif">プレビュー</dt>
+	<dd>現在のフォームをプレビュー表示します。</dd>
+
+	<dt><a name="editor"><img src="editor.gif">エディタの起動</dt>
+	<dd>HSPソースに変換して保存し、エディタで開きます。</dd>
+
+	<dt><a name="labels"><img src="labels.gif">ラベルリストの表示</dt>
+	<dd>使用しているラベルの一覧を表示します。</dd>
+
+	<dt><a name="variables"><img src="variables.gif">変数リストの表示</dt>
+	<dd>使用している変数の一覧を表示します。</dd>
+
+	<dt><a name="options"><img src="options.gif">設定</dt>
+	<dd>各種の設定を行います。<br>
+	<a href="options.html">設定項目</a>
+	</dd>
+
+	<dt><a name="setfunctionkey"><img src="functions.gif">ファンクションキーの設定</dt>
+	<dd>ファンクションキーの設定を行います。<br>
+	キー名を選択した後、割り当てたい機能を選択します。</dd>
+
+	<dt><a name="help"><img src="help.gif">ヘルプ</dt>
+	<dd>ヘルプを表示します。</dd>
+
+	<dt><a name="about"><img src="about.gif">バージョン情報</dt>
+	<dd>このプログラムについての情報を表示します。</dd>
+
+	<dt><a name="exit"><img src="exit.gif">終了</dt>
+	<dd>プログラムを終了します。</dd>
+
+	<dt><a name="cut"><img src="cut.gif">切り取り</dt>
+	<dd>現在選択されいるオブジェクトを、ローカルクリップボードに切り取ります。</dd>
+
+	<dt><a name="copy"><img src="copy.gif">コピー</dt>
+	<dd>現在選択されているオブジェクトを、ローカルクリップボードにコピーします。</dd>
+
+	<dt><a name="paste"><img src="paste.gif">貼り付け</dt>
+	<dd>ローカルクリップボードにあるオブジェクトをフォーム上に貼り付けます。</dd>
+
+	<dt><a name="delete"><img src="delete.gif">削除</dt>
+	<dd>現在選択されているオブジェクトを削除します。</dd>
+
+	<dt><a name="undo"><img src="undo.gif">元に戻す</dt>
+	<dd>直前の操作を元に戻します。<br>
+	切り取りやコピーを元に戻しても、クリップボードの内容まで元に戻るわけではありません。</dd>
+
+	<dt><a name="redo"><img src="redo.gif">やり直し</dt>
+	<dd>元に戻した操作をやり直します。</dd>
+
+	<dt><a name="objup"><img src="objup.gif">オブジェクトを上へ</dt>
+	<dd>現在選択されているオブジェクトを一つ上にします。</dd>
+
+	<dt><a name="objdown"><img src="objdown.gif">オブジェクトを下へ</dt>
+	<dd>現在選択されているオブジェクトを一つ下にします。</dd>
+
+	<dt><a name="objfont"><img src="objfont.gif">オブジェクトのフォント</dt>
+	<dd>フォーム上のオブジェクトのフォントを指定します。<br>
+	フォーム上のオブジェクト全てに、ここで指定したフォントが適用されます。
+	個別にフォントを指定することはできません。</dd>
+
+	<dt><a name="grid"><img src="grid.gif">グリッドの設定</dt>
+	<dd>フォーム上のグリッドに関する設定を行います。<br>
+	<div class="subdl">
+	<dl>
+		<dt>グリッドの表示</dt>
+		<dd>フォーム上にグリッドを表示するかしないかを指定します。</dd>
+		<dt>グリッドの幅</dt>
+		<dd>グリッドの幅を指定します。</dd>
+	</dl>
+	</div>
+	</dd>
+</dl>
+
+<hr>
+<a href="../index.html">トップページに戻る</a><br>
+</body>
+</html>

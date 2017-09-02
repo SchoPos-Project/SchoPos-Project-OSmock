@@ -1,0 +1,251 @@
+	;スクリーン Screen
+	screen 0,880,520,0
+	title "Schooz Rikewin"
+	objmode 2
+	#include "mod_stbar.as"
+	#define DIID_DWebBrowserEvents2 "{34A715A0-6587-11D0-924A-0020AFC7AC4D}"
+	#define DISPID_NAVIGATECOMPLETE2 252
+	
+	sdim TabURL,2
+	sdim nameForTab,2
+
+	nameForTab(0) = "http://www.google.co.jp/"
+	nameForTab(1) = "http://www.yahoo.co.jp/"
+
+	TabURL(0) = "http://www.google.co.jp/"
+	TabURL(1) = "http://www.yahoo.co.jp/"
+	url="http://www.google.co.jp/"
+	tab=1
+	NowTab = 0
+
+	;ボタン Button1
+	font "メイリオ",12,0
+	objsize 20,20
+	pos 860,0
+	button "s",*seach
+
+	;塗りつぶし矩形 Boxf1
+	boxf 710,0,860,19
+
+	;入力ボックス Search Bar
+	pos 720,1
+	search=""
+	input search,132,16
+
+	;塗りつぶし矩形 Boxf2
+	color 192,192,192
+	boxf 0,0,709,19
+
+	;ボタン ransel
+	objsize 40,40
+	pos 0,480
+	button "ransel",*ransel
+
+	;ボタン explorer
+	pos 40,480
+	button "Exp.",*explorer
+
+	;ボタン krone
+	pos 80,480
+	button "Krone",*krone
+
+	;ボタン music
+	pos 120,480
+	button "MPlay",*mplay
+
+	;ボタン memopad
+	pos 160,480
+	button "Memo",*Button6
+
+	;塗りつぶし矩形 Boxf3
+	color 255,255,255
+	boxf 800,480,879,519
+
+	;線 Line1
+	color 0,0,0
+	line 879,479,0,479
+
+	;線 Line2
+	line 800,530,800,480
+
+	;ボタン maid
+	pos 760,480
+	button "Mai.",*maid
+
+	;線 Line3
+	line 759,530,759,480
+
+	;メッセージ Mes1
+	pos 822,480
+	mes "Wed."
+
+	;メッセージ Mes2
+	pos 820,500
+	mes "15:27"
+
+	;矩形 Box1
+	color 0,0,255
+	line 879,20,0,20
+	line 879,478,0,20
+	line 0,478,879,478
+	line 0,20,0,478
+
+	;矩形 Box3
+	line 878,21,1,21
+	line 878,477,1,21
+	line 1,477,878,477
+	line 1,21,1,477
+
+	;ボタン Button14
+	objsize 40,20
+	pos 838,22
+	button "X",*expclose
+
+	;ボタン Button15
+	pos 798,22
+	button "_",*expmini
+
+	;線 Line14
+	line 0,41,879,41
+*netmain
+	;入力ボックス Input2
+	pos 60,42
+	input2=url
+	input url,790,30:obj_url=stat
+
+	;ボタン Button14
+	objsize 30,30
+	pos 850,42
+	button "GO",*Button14
+	
+	if nowtab=0{
+		pos 31,42:objsize 30,30:button "→",*go_f0
+	}else{
+		pos 31,42:objsize 30,30:button "→",*go_f1
+	}
+	if nowtab=1{
+		pos 2,42:objsize 30,30:button "←",*go_b0
+	}else{
+		pos 2,42:objsize 30,30:button "←",*go_b1
+	}
+	;objsize 30,30 :pos 31,42:button "→",*go_f0
+	;objsize 30,30 :pos 2,42:button "←",*go_b0
+	;objsize 90,19
+	;pos 2,22
+	;button "Tab1",*go_tab1
+
+	;pos 92,22
+	;button "Tab2",*go_tab2
+
+	objsize 90,19
+	if nowtab=0{
+		pos 2,22 :button "タブ1",*go_tab1
+		pos 92,22 :button "タブ2",*go_tab2
+	}
+	if nowtab=1{
+		pos 2,22 :button "タブ1",*go_tab1
+		pos 92,22 :button "タブ2",*go_tab2
+	}
+	
+
+
+
+	;塗りつぶし矩形 Boxf4
+	sx=875:sy=405
+	pos 2,72
+	;url="http://www.google.com"
+	;axobj ie, "Shell.Explorer.2",sx,sy
+	;ie->"Navigate" url
+	objsize 875,405
+	axobj ie, "Shell.Explorer.2",sx,sy
+	num=stat
+	comevent ie_event, ie, "{34A715A0-6587-11D0-924A-0020AFC7AC4D}",*event 
+	ie->"Navigate" url
+	
+
+	
+	;comevent ie_event, ie, "{34A715A0-6587-11D0-924A-0020AFC7AC4D}",*event 
+*main
+	stop
+
+*seach
+	stop
+
+*ransel
+	stop
+
+*explorer
+	stop
+
+*krone
+	stop
+
+*mplay
+	stop
+
+*Button6
+	stop
+
+*maid
+	stop
+
+*expclose
+	stop
+
+*expmini
+	stop
+
+*event
+	dispid = comevdisp(ie_event)
+	if dispid = DISPID_NAVIGATECOMPLETE2 : gosub *OnNavigateComplete2
+	return
+	
+*OnNavigateComplete2
+	name = ie("LocationURL")
+	nameForTab(NowTab) = ie("LocationURL")
+	objprm obj_url,name
+	pDoc = ie("Document")
+	name = pDoc("Title")
+	;stbar_text name
+	delcom pDoc
+	;title name +" - Look Explorer"
+	return	
+
+*go_tab1
+	if NowTab = 0 : goto *main
+
+	TabURL(1) = nameForTab(1)
+
+	url = TabURL(0)
+	NowTab = 0
+	goto *wow
+
+*go_tab2
+	if NowTab = 1 : goto *main
+
+	TabURL(0) = nameForTab(0)
+
+	url = TabURL(1)
+	NowTab = 1
+	goto *wow
+	
+*wow
+	ie->"Navigate" url
+	goto *netmain
+*go_f0
+	ie->"GoForward"
+	goto *main
+*go_f1
+	ie->"GoForward"
+	goto *main
+*go_b0
+	ie->"GoBack"
+	goto *main
+*go_b1
+	ie->"GoBack"
+	goto *main
+	
+*Button14
+	ie->"Navigate" url
+	goto*main
+	

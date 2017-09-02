@@ -1,0 +1,49 @@
+*s	
+#include "mod_rss.as"
+	// RSSのURL
+	url="http://rssc.dokoda.jp/r/6666cd76f96956469e7be39d750cc7d9/http/www2.hp-ez.com/hp/ytanifreesoft/page18"
+	// RSSのロード
+	rssload desc,link,url,6
+	// 表示
+	objsize 640,24
+	foreach desc
+	hyoji=desc(cnt)
+	if hyoji="[通報・削除依頼]":hyoji=""
+	if hyoji="2014年1月（12）":hyoji=""
+	if hyoji="HOME":hyoji=""
+	if hyoji="Joogle":hyoji=""
+	if hyoji="製品一覧":hyoji=""
+	if stat=1:hyoji= "　YotioSoftからのお知らせ(RSS)の取得に失敗しました。インターネットに接続されているか確認して下さい。" 
+	if stat=2:hyoji= "　RSSではありません。" 
+	;--------------------------------------------------------------------------------------------
+	rssloads=str(hyoji) ;文字列型になおす
+	rssx=1024
+	saver=0
+	gatsu=gettime(1)
+	nichi=gettime(3)
+	youbi0=gettime(2)
+	;取得した曜日関数を漢字に変換
+	if youbi0=0:youbi="日"
+	if youbi0=1:youbi="月"
+	if youbi0=2:youbi="火"
+	if youbi0=3:youbi="水"
+	if youbi0=4:youbi="木"
+	if youbi0=5:youbi="金"
+	if youbi0=6:youbi="土"
+	;----------------------------
+	repeat
+
+	if rssx<-1200:rssx=1024
+	color 128,128,128:boxf 0,0,1024,20
+	rssx=rssx-5
+	rji=gettime(4)
+	if 0 <= rji & 12 >=rji:talk="おはようございます。"
+	if 11 <= rji & 17 >=rji:talk="こんにちは。"
+	if 18 <= rji & 24 >=rji:talk="こんばんは。"
+	pos rssx,1:color 255,255,255
+	mes ""+talk+"今日は"+gatsu+"月"+nichi+"日 "+youbi+"曜日です。"+hyoji+"
+	//--------------------------
+	wait 10
+	loop
+	loop
+	goto*s

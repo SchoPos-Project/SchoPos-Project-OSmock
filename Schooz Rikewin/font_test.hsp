@@ -1,0 +1,8 @@
+#epack "data/chogokubosogothic_5.ttf"
+	#epack "data/mplus-1c-thin.ttf"
+	#include "gdi32.as"
+	notesel buf
+	noteload "data/chogokubosogothic_5.ttf"
+	noteload "data/mplus-1c-thin.ttf"
+	AddFontMemResourceEx varptr(buf), strsize, 0, varptr(pcFonts)
+	hFont = stat ; フォントハンドル

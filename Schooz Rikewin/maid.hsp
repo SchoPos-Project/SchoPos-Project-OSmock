@@ -1,0 +1,86 @@
+//ここからメイドさんの仕事
+	color 0,0,0:gmode 3,,,128
+	boxfa 0,0,880,520
+	color 192,192,192
+	boxf 390,110,490,209
+	pos 340,260
+	maidin=""
+	input maidin,170,30
+
+	objsize 30,30
+	pos 510,260
+	button "OK",*maidok
+	
+	pos 340,300
+	sdim mesbox1,256
+	;objsize 200,160
+	mesbox mesbox1,200,160,0;,"お呼びでしょうか？\n"
+	m_l_b=stat ;メイドさんの仕事履歴
+
+
+
+	;dialog "お呼びでしょうか？"
+	maidcall=0
+	;goto *desktop
+	stop
+
+*maidok
+	split maidin," ",min,min2
+	min1=getpath(min,16)
+	if min1="open" {
+		stop
+		;goto *maidopen
+	}if min1="close" {
+		stop
+		;goto *maidclose
+	}if min1="hello" {
+		mesbox1+="こんにちは"+"\n"
+		objprm m_l_b,mesbox1
+		stop
+		;goto *desktop
+	}if min1="shutdown" {
+		
+		stop
+		;goto *maidshutdown
+	}if min1="" {
+		mesbox1+="冷やかさないでください。"+"\n"
+		objprm m_l_b,mesbox1
+		stop
+		;goto *desktop
+	}else{
+		mesbox1+="私には予め決められた作業しかできません。\n私が出来る事については取扱説明書の\"Maid.txt\"をお読みください。"+"\n"
+		objprm m_l_b,mesbox1
+	stop
+	;goto *desktop
+	}
+	
+
+	stop
+*maidopen
+	min3 = getpath(min2, 16)
+	if min3="c:/" {
+		mesbox1+="C Drive\n"
+		goto *desktop
+	}if min3="c:/program files" {
+		mesbox1+="C Program Files\n"
+		goto *desktop
+	}if min3="c:/music" {
+		mesbox1+="C Music\n"
+		goto *desktop
+	}if min3="c:/pictures" {
+		mesbox1+="C Pictures\n"
+		goto *desktop
+	}if min3="?"|min3=""{
+		mesbox1+="help\n"
+	}else{
+		mesbox1+="そのようなディレクトリは存在いたしませんでした。\n"
+	;goto *desktop
+	}
+*maidclose
+	goto *desktop
+	stop
+*maidshutdown
+	mesbox1+="OK.\n"
+	goto *shutdown
+
+//メイドさんお疲れさま。

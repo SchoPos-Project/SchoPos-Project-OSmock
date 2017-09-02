@@ -1,0 +1,16 @@
+#include "mod_rss.as"
+	// RSSのURL
+	url="http://rssc.dokoda.jp/r/6666cd76f96956469e7be39d750cc7d9/http/www2.hp-ez.com/hp/ytanifreesoft/page18"
+	// RSSのロード
+	rssload desc,link,url,6
+	// 表示
+	objsize 640,24
+	foreach desc
+	hyoji=desc(cnt)
+	if hyoji="[通報・削除依頼]":hyoji=""
+	if hyoji="2014年1月（12）":hyoji=""
+	if hyoji="HOME":hyoji=""
+	if hyoji="Joogle":hyoji=""
+	if hyoji="製品一覧":hyoji=""
+	if stat=1:hyoji= "　YotioSoftからのお知らせ(RSS)の取得に失敗しました。インターネットに接続されているか確認して下さい。" 
+	if stat=2:hyoji= "　RSSではありません。" 

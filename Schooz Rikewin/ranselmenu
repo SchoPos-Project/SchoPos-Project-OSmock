@@ -1,0 +1,56 @@
+color 0,0,0
+	line 220,89,0,89
+
+	line 220,480,220,90
+
+	line 0,480,0,90
+
+	line 220,180,0,180
+
+	boxf 20,110,79,169
+
+	font "メイリオ",20,0
+	color 255,255,255
+	pos 100,110
+	mes "User"
+
+	pos 100,140
+	mes "Admin."
+
+	font "メイリオ",12,0
+	objsize 170,50
+	objimage 2
+	pos 20,200
+	button "My Computer",*mycon
+
+	pos 20,250
+	button "Notes Browse",*krone
+
+	pos 20,310
+	button "MPlay",*mplay
+
+	pos 20,360
+	button "Control Panel",*ctrlp
+
+	objsize 40,40
+	pos 0,480
+	button "ransel",*desktop
+	
+	color 0,0,0
+	line 200,190,10,190
+
+	line 200,420,200,190
+
+	line 10,420,200,420
+
+	line 10,190,10,420
+
+	line 200,305,10,305
+
+	objsize 140,30
+	pos 20,440
+	button "Shutdown(s)",*shutdown
+
+	objsize 30,30
+	pos 160,440
+	button "▽",*shutopt

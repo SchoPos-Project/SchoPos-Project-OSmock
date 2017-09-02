@@ -1,0 +1,34 @@
+; ちょっとしたプログラムのサンプルです
+;
+; sample2.hfm を HSP Visual Designer で開いて、
+; [HSPソースに変換] で sample2.hsp という名前で保存します。
+; その際、変換オプションの [ラベルを生成する] をチェックしないようにします。
+; そうしたら、スクリプトエディタ等でこのファイルを開いて実行します。
+;
+; このように、インターフェース部分と実行部分でファイルを分けると、
+; レイアウトの変更をしてもソースを書き換える必要が無くなります。
+
+#include "sample2.hsp"
+
+*CalcBMI
+	height_m=double(height)*0.01
+	if height_m=0.0:stop
+	bmi=double(weight)/(height_m*height_m)
+
+	message="BMIは "+strf("%.2f",bmi)+" です\n"
+	message+="あなたは"
+	if bmi<18.5{
+		message+="やせ過ぎです"
+	}else:if bmi<25.0{
+		message+="普通です"
+	}else:if bmi<30.0{
+		message+="太りぎみです"
+	}else:if bmi<35.0{
+		message+="肥満です"
+	}else:if bmi<40.0{
+		message+="中度の肥満です"
+	}else{
+		message+="重度の肥満です"
+	}
+	objprm 3,message
+	stop

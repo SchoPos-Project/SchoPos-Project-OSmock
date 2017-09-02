@@ -1,0 +1,93 @@
+cls
+#include "rssload"
+	objimage 1
+	font "メイリオ",12,0
+	objsize 20,20
+	pos 860,0
+	button "s",*seach
+
+	boxf 710,0,860,19
+
+	pos 720,1
+	search=""
+	input search,132,16
+
+	color 192,192,192
+	boxf 0,0,709,19
+	
+	objsize 40,40
+	pos 40,480
+	button "Exp.",*explorer
+
+	pos 80,480
+	button "Notes",*krone
+
+	pos 120,480
+	button "MPlay",*mplay
+
+	pos 160,480
+	button "Memo",*Button6
+
+	color 255,255,255
+	boxf 800,480,879,519
+	
+	color 255,255,255
+	boxf 200,480,758,519
+
+	color 0,0,0
+	line 879,479,0,479
+
+	line 800,530,800,480
+
+	pos 760,480
+	button "Mai.",*maid
+
+	line 759,530,759,480
+
+	font "メイリオ",12,0
+	pos 822,480
+	mes youbi
+
+	pos 820,500
+	mes ""+ji+":"+hun+""
+	;Wallpaper
+	gsel 0,0
+	pos 0,0
+	gzoom 880,479,3,0,0,_imgx,_imgy
+	;RSS
+	color 192,192,192
+	boxf 0,89,219,478
+
+	#include "ranselmenu"
+	
+	rssloads=str(hyoji) ;文字列型になおす
+	rssx=1024
+	saver=0
+	gatsu=gettime(1)
+	nichi=gettime(3)
+	youbi0=gettime(2)
+	;取得した曜日関数を漢字に変換
+	if youbi0=0:youbi="Sun."
+	if youbi0=1:youbi="Mon."
+	if youbi0=2:youbi="Tue."
+	if youbi0=3:youbi="Wed."
+	if youbi0=4:youbi="Thu."
+	if youbi0=5:youbi="Fri."
+	if youbi0=6:youbi="Sut."
+	;----------------------------
+	repeat
+	if rssx<-880:rssx=710
+	color 192,192,192:boxf 0,0,709,19
+	rssx=rssx-5
+	rji=gettime(4)
+	if 0 <= rji & 12 >=rji:talk="おはようございます。"
+	if 11 <= rji & 17 >=rji:talk="こんにちは。"
+	if 18 <= rji & 24 >=rji:talk="こんばんは。"
+	pos rssx,1:color 255,255,255:font "メイリオ",12,0
+	mes ""+talk+"今日は"+gatsu+"月"+nichi+"日 "+youbi+"曜日です。"+hyoji+"
+	color 0,0,0:boxf 710,0,860,19
+	objimage 1
+	//--------------------------
+	wait 10
+	loop
+	loop

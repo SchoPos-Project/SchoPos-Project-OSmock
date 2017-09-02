@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=Shift_JIS">
+	<meta name="content-language" content="ja">
+	<link rel="stylesheet" href="default.css" type="text/css">
+	<title>HSP Visual Designer - 使い方</title>
+</head>
+
+<body>
+<h1 class="title">使い方</h1>
+<h2>ウィンドウの構成</h2>
+<p>
+HSP Visual Designer を起動すると、以下のようなウィンドウが表示されます。<br>
+<br>
+<img src="window.png" width="560" height="480" alt="メインウィンドウ">
+<ul>
+	<li><a href="toolbar.html">ツールバー</a><br>
+	ボタンを押すと各種の機能が実行されます。</li>
+	<li><a href="tool.html">ツールボックス</a><br>
+	使用するツールを選択します。</li>
+	<li>フォームペイン<br>
+	フォームが表示されています。<br>
+	このフォーム上に、ボタンなどのオブジェクトを設置します。</li>
+	<li><a href="property.html">プロパティボックス</a><br>
+	現在選択されているオブジェクトの、プロパティが表示されています。<br>
+	また、複数のオブジェクトを選択した場合や、コード表示モードの時は、それぞれのオプションが表示されます。</li>
+	<li>ソースボックス<br>
+	現在選択されているオブジェクトのソースコードが表示されています。</li>
+	<li>ステータスバー<br>
+	各種情報が表示されています。</li>
+</ul>
+</p>
+
+<h2>操作手順</h2>
+
+<h3>オブジェクトの設置</h3>
+<p>
+まず、<a href="tool.html">ツールボックス</a>で設置したいオブジェクトを選びます。<br>
+フォーム上の設置したい場所をクリックした後、ドラッグしてオブジェクトの大きさを決めて、マウスボタンを放すと設置できます。<br>
+「<a href="toolbar.html#grid"><img src="grid.gif">グリッドの設定</a>」で「グリッドにスナップ」がチェックされていると、位置や大きさがグリッドに合わせられます。<br>
+<img src="putobj.png"><br>
+シフトキーを押しながらドラッグすると、大きさが正方形になります。<br>
+オブジェクトは、フォームからはみ出す位置に設置することはできません。<br>
+</p>
+
+<h3>マウスによる移動・リサイズ</h3>
+<p>
+選択ツールでオブジェクトを選択してドラッグすると、オブジェクトを移動できます。<br>
+<img src="moveobj.png"><br>
+Shiftキーを押しながらドラッグすると、垂直・水平に移動できます。<br>
+<br>
+オブジェクトの四隅とその中間にあるハンドルをドラッグすると、オブジェクトのサイズを変更できます。<br>
+<img src="rsizeobj.png"><br>
+<br>
+また、複数のオブジェクトを選択して、まとめて移動したり、位置や大きさを揃えることができます。<br>
+複数のオブジェクトを選択する方法は3通りあります。<br>
+<ul>
+	<li>フォーム上で左ボタンを押した後、ドラッグしてラバーバンドで選択する</li>
+	<li>Ctrlキーを押しながら選択して、現在選択されているオブジェクトに追加して選択する</li>
+	<li>Shiftキーを押しながら選択して、現在選択されているオブジェクトと新たに選択したオブジェクト、その間のオブジェクトを選択する</li>
+</ul>
+</p>
+
+<h3>プロパティの設定</h3>
+<p>
+プロパティボックスで、オブジェクトの各種属性を設定します。<br>
+「<a href="property.html#autoupdate"><img src="autoupdate.gif">自動更新</a>」にチェックを入れている場合は、設定がすぐに反映されます。<br>
+そうでない場合、「<a href="property.html#update"><img src="update.gif">更新</a>」ボタンを押した時に反映されます。<br>
+各プロパティ名にカーソルを持っていくと、簡単な説明がステータスバーに表示されるので、それを参考にしてください。<br>
+プロパティ名の横に「...」と表示されている場合、プロパティ名のところでクリックすると、ダイアログが開いて参照できます。<br>
+</p>
+
+<h3>フォームの保存</h3>
+<p>
+フォームを作成したら、ツールバーの「<a href="toolbar.html#save"><img src="save.gif">フォームを保存</a>」ボタンを押して保存します。
+</p>
+
+<h3>HSPソースへの変換</h3>
+<p>
+フォームが完成したら、HSPのソースに変換しましょう。<br>
+ツールバーの「<a href="toolbar.html#export"><img src="export.gif">HSPソースに変換</a>」ボタンを押して、保存するファイル名を指定し、変換オプションを指定します。<br>
+HSPソースへの変換はできても、HSPソースからの読み込みはできないので、作成したフォームは「<a href="toolbar.html#save"><img src="save.gif">フォームを保存</a>」で保存しておきましょう。<br>
+</p>
+
+<hr>
+<a href="../index.html">トップページに戻る</a><br>
+</body>
+</html>

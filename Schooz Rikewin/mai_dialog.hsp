@@ -1,0 +1,4 @@
+;#module maid
+#deffunc mai_dialog str mess
+mesbox1+=mess+"\n"
+;#global

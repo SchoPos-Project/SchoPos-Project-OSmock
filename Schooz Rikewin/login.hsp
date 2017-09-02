@@ -1,0 +1,141 @@
+;--------------------------------------------------------------
+; mod_smart.as のサンプル(その４)
+;--------------------------------------------------------------
+#cmpopt varinit 1			;未初期化変数のチェック
+
+;#include "hsp3dish.as"		;HSP3Dish
+#include "mod_smart.as"	
+#include "boxfa.as";当モジュール
+
+	;--------------------------------------------------------------
+	; [mod_smart.as]モジュールの初期処理
+	;--------------------------------------------------------------
+	smart_init
+
+	;--------------------------------------------------------------
+	; 変数初期化
+	;--------------------------------------------------------------
+	;画面サイズ
+	win_width  = 880
+	win_height = 520
+	screen 0,win_width,win_height,0
+	
+
+	;stick
+	key        = 0
+
+	;タップ、タッチ(長押し)、ドラッグ、ダブルタップの戻り値
+	vswipe     = 0		;縦スワイプ
+	hswipe     = 0		;横スワイプ
+
+	;表示文字
+	vswipe_mes = ""
+	hswipe_mes = ""	
+
+	swipe_x = 0
+	swipe_y = 0
+	
+	flg_x     = 0
+	flg_y     = 0
+	det_flg_x = 0
+	det_flg_y = 0
+	x         = 0
+	y         = 0
+	a=0
+	passwd=""
+
+	;スワイプのboxfの位置
+	dim swipe_xy, 4 : swipe_xy = 0, 0, win_width, win_height
+
+	;スワイプのboxfの色
+	dim swipe_color, 3 : tap_color = 0, 50, 255
+
+	;--------------------------------------------------------------
+	; アクションを追加
+	;--------------------------------------------------------------
+	smart_add	;smart_vswipe(縦スワイプ) アクション番号[0]
+	smart_add	;smart_hswipe(横スワイプ) アクション番号[1]
+	celload "img/login.png",2
+	swipe_y=460;:a=a+1
+
+;--------------------------------------------------------------
+; メインルーチン
+;--------------------------------------------------------------
+
+*main
+
+	;画面クリア
+	redraw 0
+	
+	
+	if a=1{
+	pos 600,170:input passwd,160,30:objsize 30,30:pos 760,170:button "→",*loginchk
+} if a=0{
+	clrobj
+}
+	
+	;color 0,0,0 : boxf 0, 0, win_width, win_height
+	pos 0,0
+	;color 255,0,0 : boxf 0, 0, win_width, win_height
+ 
+	celput 2
+
+	;--------------------------------------------------------------
+	; 表示
+	;--------------------------------------------------------------
+	pos 0,0:color:gmode 3,,,128:boxfa 0, 0, win_width , swipe_y
+	pos 435,swipe_y-18:mes "∧"
+	;--------------------------------------------------------------
+	; キー取得
+	;--------------------------------------------------------------
+	
+	stick key, 256 + 512
+
+	;縦スワイプを取得 ========================
+	vswipe = smart_vswipe(0, key, 256, swipe_xy(0), swipe_xy(1), swipe_xy(2), swipe_xy(3), 600, 40, win_height)
+
+	;押されていない
+	if (vswipe = 0) & (flg_y = 0) {
+		start_y = mousey - swipe_y
+		if det_flg_y = 1 : swipe_y = swipe_y + y * 2
+	} else {
+		if vswipe = 0 : flg_y = 0
+	}
+	;押されてる
+	if (vswipe = 1) | (flg_y = 1) {
+		flg_y     = 1
+		det_flg_y = 0
+		swipe_y   = mousey - start_y
+	}
+	;離された
+	if (vswipe > 1) | (vswipe < 0) {
+		flg_y        = 0
+		det_flg_y    = 1
+		vswipe_mes   = vswipe
+		y            = vswipe * 4
+	}
+
+	;メッセージの表示できる領域を制限
+	if swipe_y < 0   : swipe_y = 0
+	if swipe_y > 460 : swipe_y = 460
+	
+	if swipe_y<174:a=1
+	if swipe_y>=174:a=0
+	
+
+	;--------------------------------------------------------------
+	; メインルーチンここまで
+	;--------------------------------------------------------------
+
+	redraw 1
+	await 1
+
+	goto *main
+
+*loginchk
+	dialog "Welcome!"+passwd
+	goto *cl
+	
+*cl
+	cls
+	stop

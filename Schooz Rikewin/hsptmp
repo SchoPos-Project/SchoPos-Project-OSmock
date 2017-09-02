@@ -1,0 +1,140 @@
+*boot
+	title "*boot"
+	#include "boot.hsp";boot
+	
+*rss
+	title "*rss"
+	#include "rssload"
+	
+*desktop
+	
+	title "*desktop"
+	cls
+	#include "desktop"
+	
+	stop
+
+*seach
+	title "*seach"
+	stop
+
+*ransel
+	title "*ransel"
+	#include "ranselmain"
+	stop
+
+*explorer
+	exp_flag=1
+	task_on=1
+	#include "desktop"
+	color 255,255,255
+	boxf 0,20,709,20
+	line 879,479,0,479
+
+	color 0,0,255
+	line 879,20,0,20
+	line 879,478,879,20
+	line 0,478,879,478
+	line 0,20,0,478
+
+	line 878,21,1,21
+	line 878,477,878,21
+	line 1,477,878,477
+	line 1,21,1,477
+
+	font "メイリオ",12,0
+	objsize 40,20
+	objimage 4
+	pos 838,22
+	button "X",*expclose
+	objimage 1
+	color 0,0,255
+
+	pos 798,22
+	button "_",*expmini
+
+	line 0,41,879,41
+
+	font "メイリオ",15,0
+	color 0,0,0
+	pos 10,22
+	mes "Window"
+
+	stop
+
+*expclose
+	exp_flag=0
+	task_on=0
+	goto *desktop
+	stop
+
+*expmini
+	exp_flag=0
+	em_flag=1
+	stop
+
+	stop
+
+*krone
+	notes_flag=1
+	task_on=1
+	#include "desktop"
+	
+	color 255,255,255
+	boxf  0,20,709,20
+	color 0,0,255
+	line 878,21,1,21
+	line 878,477,878,21
+	line 1,477,878,477
+	line 1,21,1,477
+
+	objimage 4
+	objsize 40,19
+	pos 838,22
+	button "X",*notes_close
+
+	pos 798,22
+	button "_",*notes_mini
+
+	line 0,41,879,41
+
+	stop
+
+*notes_close
+	notes_flag=0
+	task_on=0
+	goto *desktop
+	stop
+	
+*notes_mini
+	notes_flag=0
+	nm_flag=1
+	goto *desktop
+	stop
+	
+*mplay
+	stop
+
+*Button6
+	stop
+
+*maid //メイドさん (お
+	task_on=1
+	#include "desktop"
+	
+	#include "maid.hsp"
+stop
+
+*mycon
+	stop
+
+*ctrlp
+	stop
+
+*shutdown
+	end
+	stop
+
+*shutopt
+	stop
+	loop

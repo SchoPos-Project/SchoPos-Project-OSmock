@@ -1,0 +1,160 @@
+cls
+	objimage 1
+	font "メイリオ",12,0
+	
+	ji=gettime(4)+00
+	hun=gettime(6)+00
+
+	boxf 710,0,860,19
+	//検索ボックスの設置
+	pos 720,1
+	search=""
+	input search,132,16
+	objsize 20,20
+	pos 860,0
+	button "s",*seach
+	color 192,192,192
+	boxf 0,0,709,19
+	//タスクバー
+	
+	//rancelメニュー
+	objsize 40,40
+	pos 0,480
+	if ran_mnu_flag=1 {
+		objimage 2
+		button "ransel",*desktop
+	}else{
+		objimage 1
+		button "ransel",*ransel
+	}
+	
+	//Explorer
+	objsize 40,40
+	pos 40,480
+	if exp_flag=1 {
+		objimage 2
+		button "Exp.",*desktop
+	}else{
+		if em_flag=1 & exp_flag=0{
+			objimage 2
+			button "Exp.",*explorer
+		}
+	}else{
+		objimage 1
+		button "Exp.",*explorer
+	}
+	
+	//WEBBrowser
+	objsize 40,40
+	pos 80,480
+	if notes_flag=1 {
+		objimage 2
+		button "Notes",*desktop
+	}else{
+		if nm_flag=1 & notes_flag=0{
+			objimage 2
+			button "Notes",*krone
+		}
+	}else{
+		objimage 1
+		button "Notes",*krone
+	}
+	
+	//MusicPlayer
+	objsize 40,40
+	pos 120,480
+	if mp_flag=1 {
+		objimage 2
+		button "MPlay",*desktop
+	}else{
+		if mpm_flag=1 & mp_flag=0{
+			objimage 2
+			button "MPlay",*mplay
+		}
+	}else{
+		objimage 1
+		button "MPlay",*mplay
+	}
+	
+	//NotePad
+	objsize 40,40
+	pos 160,480
+	if memo_flag=1 {
+		objimage 2
+		button "Memo",*desktop
+	}else{
+		if mm_flag=1 & memo_flag=0{
+		objimage 2
+		button "Memo",*Button6
+	}
+	}else{
+		objimage 1
+		button "Memo",*Button6
+	}
+	
+	color 255,255,255
+	boxf 200,480,758,519
+
+	color 255,255,255
+	boxf 800,480,879,519
+
+	color 0,0,0
+	line 879,479,0,479
+
+	line 800,530,800,480
+	objsize 40,40
+	pos 760,480
+	button "Mai.",*maid//Maid アシスタント
+
+	line 759,530,759,480
+
+	font "メイリオ",12,0
+	pos 822,480
+	mes youbi
+
+	pos 820,500
+	mes ""+ji+":"+hun+""
+	;Wallpaper
+	gsel 0,0
+	pos 0,0
+	gzoom 880,479,3,0,0,_imgx,_imgy
+	;RSS
+	rssloads=str(hyoji) ;文字列型になおす
+	rssx=1024
+	saver=0
+	gatsu=gettime(1)
+	nichi=gettime(3)
+	youbi0=gettime(2)
+	;取得した曜日関数を漢字に変換
+	if youbi0=0:youbi="Sun."
+	if youbi0=1:youbi="Mon."
+	if youbi0=2:youbi="Tue."
+	if youbi0=3:youbi="Wed."
+	if youbi0=4:youbi="Thu."
+	if youbi0=5:youbi="Fri."
+	if youbi0=6:youbi="Sut."
+	;----------------------------
+	if task_on=0{
+	repeat
+	//Maid呼び出し
+	getkey esc,112
+	if esc=1:maidcall=maidcall+1
+	if maidcall=50:goto*maid//5秒間 f1 キーが押されたら
+	//Maidここまで
+	if rssx<-880:rssx=710
+	color 192,192,192:boxf 0,0,709,19
+	rssx=rssx-5
+	rji=gettime(4)
+	if 0 <= rji & 12 >=rji:talk="おはようございます。"
+	if 11 <= rji & 17 >=rji:talk="こんにちは。"
+	if 18 <= rji & 24 >=rji:talk="こんばんは。"
+	pos rssx,1:color 255,255,255
+	mes ""+talk+hyoji
+	color 0,0,0:boxf 710,0,860,19
+	//--------------------------
+	wait 10
+	loop
+}else{
+	color 192,192,192:boxf 0,0,709,19
+}
+	
