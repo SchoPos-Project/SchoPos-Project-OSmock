@@ -1,0 +1,89 @@
+//	[HSP3] オーナードローボタン サンプル
+//	by Let's HSP!
+#module
+#deffunc xbutton str a,int b,var c1
+#include "user32.as"
+#include "gdi32.as"
+
+#uselib "msimg32"
+#func GradientFill "GradientFill" int, int, int, int, int, int
+
+#define BS_OWNERDRAW $0B
+
+#define ctype MAKELONG(%1,%2) (%1 & $FFFF | %2 << 16)
+
+;	ウィンドウメッセージ
+	oncmd gosub *drawitem, $2B
+
+	sdim pszText
+
+	pos 50, 50
+	objsize 100, 70
+	
+	;_get_label c0,c1
+	
+	button ""+a+"", c1
+	hButton = objinfo(stat, 2)
+
+;	ボタンのスタイル変更 (BM_SETSTYLE)
+	sendmsg hButton, $F4, BS_OWNERDRAW
+
+	stop
+
+;	WM_DRAWITEMメッセージ
+*drawitem
+;	DRAWITEMSTRUCT構造体
+	dupptr DIS, lparam, 48
+
+	if DIS.5 = hButton {
+;		ボタン内の塗りつぶし色に白ブラシ
+		;GetStockObject 0
+		;SelectObject DIS.6, stat
+
+;		ボタン外枠に角の丸い長方形
+		RoundRect DIS.6, 0, 0, DIS.9, DIS.10, 0, 0
+
+;		アイテムの状態 ODS_SELECTED
+		if DIS.4 & $1 {
+			;RedGreen = MAKELONG($CC00, $CC00), MAKELONG($F300, $F300)
+			;BlueAlpha = MAKELONG($CC00, 0), MAKELONG($F300, 0)
+		} else {
+			;RedGreen.0 = MAKELONG($F300, $F300), MAKELONG($DD00, $DD00)
+			;BlueAlpha.0 = MAKELONG($F300, 0), MAKELONG($DD00, 0)
+		}
+		TRIVERTEX.0 = 2, 2, RedGreen.0, BlueAlpha.0
+		TRIVERTEX.4 = DIS.9 - 2, DIS.10 - 2, RedGreen.1, BlueAlpha.1
+		GRADIENT_RECT = 0, 1
+		GradientFill DIS.6, varptr(TRIVERTEX), 2, varptr(GRADIENT_RECT), 1, $1
+
+		RECT = 0, 0, DIS.9, DIS.10
+
+;		アイテムの状態 ODS_FOCUS
+		if DIS.4 & $10 {
+			InflateRect varptr(RECT), -2, -2
+			DrawFocusRect DIS.6, varptr(RECT)
+		}
+
+;		テキストカラー
+		SetTextColor DIS.6, $010101
+		SetBkMode DIS.6, 1
+
+;		テキスト取得 (WM_GETTEXT)
+		sendmsg DIS.5, $D, 64, varptr(pszText)
+
+;		テキスト描画
+		DrawText DIS.6, pszText, -1, varptr(RECT), $20 | $4 | $1
+
+		return 1
+	}
+
+	return
+return
+; lbで受け取ったラベルをlb2に返します。
+#deffunc _get_label var lb, var lb2
+    lb2 = lb
+    return            ; returnではラベル型は返せない
+#define global get_label(%1, %2) lb_temp@ = %1 : _get_label lb_temp@, %2
+#global
+
+*jump

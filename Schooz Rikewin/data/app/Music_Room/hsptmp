@@ -1,0 +1,175 @@
+*setting
+	buffer 1
+	color 255,0,0
+	boxf; 0,100,330,200
+	buffer 10
+	color 0,0,0
+	boxf
+	screen 0
+	bgscr 0,330,200
+	celload "img/play.png",2
+	celload "img/stop.png",3
+	celload "img/pause.png",4
+	celload "img/x.png",5
+	celload "img/-.png",6
+	celload "img/vol.png",7
+	
+	#include "llmod3\\llmod3.hsp"
+	#include "llmod3\\trackbox.hsp"
+	
+	;***** 透明ウィンドウの作成 (transparent.hsp) *****
+	;▼必要となるAPIや定数の定義
+	#uselib "user32.dll"
+	#func SetWindowLong "SetWindowLongA" int,int,int
+	#func SetLayeredWindowAttributes "SetLayeredWindowAttributes" int,int,int,int
+	#const LWA_COLORKEY     1             ;透明色を指定
+	#const LWA_ALPHA        3             ;アルファー値を指定
+	#const GWL_EXSTYLE    -20             ;拡張ウィンドウスタイル
+	#const WS_EX_LAYERED  $00080000       ;透明なウィンドウ属性
+	
+	#uselib "shell32.dll"
+	#func DragAcceptFiles "DragAcceptFiles" int,int
+	#func DragQueryFile   "DragQueryFileA"  int,int,int,int
+	#func DragQueryPoint  "DragQueryPoint"  int,int
+	#func DragFinish      "DragFinish"      int
+	#define WM_DROPFILES      0x0233
+
+	alpha = 225 ; 0～255
+	SetWindowLong hwnd,-20,WS_EX_LAYERED
+	SetLayeredWindowAttributes hwnd,0,alpha,LWA_ALPHA
+	;gmode 3,640,480,50
+	pos 0,100
+	gcopy 1,0,100,330,200
+	pos 0,0
+	color 0,0,1
+	;gmode 2
+	gcopy 10,0,0,330,100
+
+*main
+	
+	objsize 20,20
+	objimage 1
+	pos 310,100
+	color 1,1,1
+	objimage 5
+	button "",*exit
+	pos 290,100
+	objimage 6
+	button gosub "",*minimum
+	objsize 30,30
+	objimage 2
+	pos 100,160
+	button "", *sound_play
+	objimage 4
+	pos 150,160
+	button "", *sound_pause
+	pos 200,160
+	objimage 3
+	button "", *sound_stop
+	pos 250,174
+	objimage 7
+	objsize 30,16
+	button "", *vol_setting
+	pos 0,100
+	gcopy 1,0,0,290,117.0
+	oncmd gosub *OnDropFiles, WM_DROPFILES
+	DragAcceptFiles hwnd, 1
+	if stat == 0 {
+    dialog "設定に失敗しました。", 1, "エラー"
+    end
+	}	
+	color 150,150,150;:boxf 0,0,350,200
+	color 1,1,1
+	line 0,200,350,200
+	pos 14,130
+	color 255,255,255
+	mes "ここにドラック＆ドロップしてください。"
+	pos 0,100:mes"Music Player"
+	onclick gosub *move
+	
+stop
+
+*move
+	if vol_t>0:clrobj vol_t
+	if wparam=1 : gsel 0, : sendmsg hwnd,$00A1,2,0
+	
+	return
+	
+*exit
+	end
+	
+*minimum
+	sendmsg hwnd, $112, $F020
+	return
+	
+*sound_play
+	gcopy 1,0,0,290,15.5
+	;if filename="":dialog "ファイルをドラッグしてください。",1:
+	;goto*main
+	;mmload filename, 0
+	;mmplay 0
+	mci "open \""+filename+"\" alias music"
+	mci "play music"
+	pos 0,100
+	gcopy 1,0,0,290,17.0
+	pos 0,100:mes"Music Player - 　　　　　"
+	pos 0,100:mes"Music Player - "+id3_title+""
+
+stop
+
+*sound_stop
+	mci "stop music"
+	mci "close music"
+	;mmstop 
+	pos 0,100
+	gcopy 1,0,0,290,17.0
+	pos 0,100:mes"Music Player -STOP-"
+stop
+
+*sound_pause
+	mci "pause music"
+	;mmstop 
+	pos 0,100
+	gcopy 1,0,0,290,17.0
+	pos 0,100:mes"Music Player -PAUSE-"
+stop
+
+*vol_setting
+	if vol_t>0:clrobj vol_t
+	pos 250,44
+	trackbox 30,130,10|$70:vol_t=stat
+	trackrng 0,1000
+	repeat
+	trackpos ,1 : SoundVol=1000-stat:mu_p=stat
+	
+	mci "setaudio music volume to "+SoundVol+""
+	await 10
+	loop
+	stop
+
+
+*OnDropFiles
+	hDrop = wparam
+	DragQueryFile hDrop, -1, 0, 0
+	filecount = stat
+	sdim filename, 260
+	repeat filecount
+    DragQueryFile hDrop, cnt, varptr(filename), 260
+    mci "open \""+filename+"\" alias music"
+    
+    exist filename
+    sdim id3_data,0x80
+    bload filename, id3_data,,strsize-0x80
+
+	getstr id3_title,id3_data,0x03 
+    
+	mci "play music"
+    ;mmload filename:mmplay
+    name=getpath(filename,8)
+    pos 0,100
+	gcopy 1,0,0,290,17.0
+    pos 0,100:mes"Music Player - 　　　　　"
+    pos 0,100:mes"Music Player - "+name+""
+	loop
+	DragFinish hDrop
+	return 0
